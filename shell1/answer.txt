@@ -1,0 +1,1 @@
+"awk '{print $1}' /path/to/file | uniq -c" is the way to do it. awk takes care of only keeping the very first word of each line, uniq -c will take care of sort the output out and count it

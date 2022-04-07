@@ -1,0 +1,32 @@
+- name:  
+  hosts: all
+  become: yes
+
+  tasks:
+    - fail:
+        msg: "Please specify a --limit servername/children list to your ansible-playbook command."
+      when: ansible_limit is not defined
+      run_once: true
+
+
+    - name: Get current ip address register it as {{ currentip.stdout }}
+      shell: ip a | grep eth1 | grep inet | awk '{print $2}'
+      register: currentip
+    - debug:
+        msg: "{{currentip.stdout}}"
+
+
+    - name: Add a new route to eth1
+      blockinfile:
+        path: /etc/network/interfaces/99-internal
+        marker: "{mark}"
+        marker_begin: "auto eth1"
+        marker_end: "        mtu 1500"
+        block: |-
+          iface eth1 inet static
+                  address {{currentip.stdout}}
+                  metric 300
+                  up ip route add 192.168.200.0/24 via 192.168.100.1 dev eth1
+
+
+

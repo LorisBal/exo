@@ -1,0 +1,28 @@
+- name:
+  hosts: all
+
+  vars:
+    env: staging
+    varconf:
+    - {name: Ariel, ip: 192.168.100.100, player: 100 }
+    - {name: Ariel, ip: 192.168.100.101, player: 101 }
+    - {name: Ariel, ip: 192.168.100.102, player: 102 }
+    - {name: Ariel, ip: 192.168.100.103, player: 103 }
+    - {name: Ariel, ip: 192.168.100.104, player: 104 }
+    - {name: Ariel, ip: 192.168.100.105, player: 105 }
+    - {name: Belinda, ip: 192.168.100.110, player: 110 }
+    - {name: Belinda, ip: 192.168.100.111, player: 111 }
+    - {name: Belinda, ip: 192.168.100.112, player: 112 }
+    - {name: Belinda, ip: 192.168.100.113, player: 113 }
+    - {name: Belinda, ip: 192.168.100.114, player: 114 }
+    - {name: Belinda, ip: 192.168.100.115, player: 115 }
+    playername:
+    - {name: Ariel}
+    - {name: Belinda}
+
+  tasks:
+
+    - name:
+      ansible.builtin.template:
+        src: templates/template.j2
+        dest: /home/lba/hi.txt

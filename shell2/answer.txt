@@ -1,0 +1,7 @@
+My take on it is that crontab does not know about the environment variables, hence when tried to execute the script ended up running "/bin/chmod -R 777 /" since it had no idea about the variables and will fail interpreting those. chmod 777 on root will kill the machine. If this is the issue, there would be an easy way to fix it by by adding those environment variable within crontab by adding the variable at the start of the file.
+
+Another way, most likely easier for automation purpose, to fix this, would be to specify the environment variable file with the script to execute like this (If the environment variables are set into /etc/environment) :
+
+0 5 * * * . /etc/environment; /path/to/chmod/script
+
+I would also avoid using chmod 777 and rather use chmod +x or whatever is needed. I would also check for symlink prior to running this kind of permissions changes just in case something could point back to /

@@ -1,0 +1,16 @@
+all:
+  children:
+    player:
+      children:
+        player_ariel:
+          hosts:
+            production_player_100:
+              ansible_host: 192.168.100.100
+            production_player_101:
+              ansible_host: 192.168.100.101
+        player_belinda:
+          hosts:
+            production_player_110:
+              ansible_host: 192.168.100.110
+            production_player_111:
+              ansible_host: 192.168.100.111

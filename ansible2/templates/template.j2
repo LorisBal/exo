@@ -1,0 +1,21 @@
+#jinja2:lstrip_blocks: True
+{% for var in varconf %}
+backend production_player_{{ var.player }} {
+    .host: {{ var.ip }}:
+    .port: 80;
+    .probe: sanity_production
+}
+
+{% endfor %}
+
+    # Define load balancers and their backends
+{% for var in playername %}
+    # {{ var.name }} pool
+    new player_monitored_{{ var.name|lower }}_director = director.hash();
+    {% for var2 in varconf %}
+    {% if var.name == var2.name %}
+    player_monitored_{{ var.name |lower}}_director.add_backend(production_player_{{ var2.player}}, 10);
+    {% endif %}
+    {% endfor %}
+
+{% endfor %}
